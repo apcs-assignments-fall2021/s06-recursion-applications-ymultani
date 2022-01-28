@@ -14,17 +14,26 @@ public class MyMain {
 
     // Wrapper Method
     public static boolean binarySearch(int[] arr, int num) {
-        return binarySearchTR(arr, num, 0, arr.length-1);
+        return binarySearchTR(arr, num, 0, arr.length - 1);
     }
 
     // Tail recursive method:
     public static boolean binarySearchTR(int[] arr, int num, int lowerBound, int upperBound) {
-        // YOUR CODE HERE
+        int mid = 0;
+        if (upperBound >= lowerBound) {
+            mid = lowerBound + ((upperBound - lowerBound) / 2);
+
+            if (arr[mid] == num) {
+                return true;
+            } else if (arr[mid] < num) {
+                return binarySearchTR(arr, num, mid + 1, upperBound);
+            } else if (arr[mid] > num) {
+                return binarySearchTR(arr, num, lowerBound, mid - 1);
+            }
+        }
+
         return false;
     }
-
-
-
 
 
     // ********************
@@ -68,7 +77,40 @@ public class MyMain {
     // Then we need to copy the rest of the array
 
     public static int[] merge(int[] arr1, int[] arr2) {
-        // YOUR CODE HERE
-        return null;
+        int[] new_arr = new int[arr1.length + arr2.length];
+        int new_index = 0;
+        int arr1_index = 0;
+        int arr2_index = 0;
+
+        while (arr1_index < arr1.length && arr2_index < arr2.length && new_index < new_arr.length) {
+            while (arr1_index < arr1.length && arr2_index < arr2.length && arr1[arr1_index] < arr2[arr2_index]) {
+                new_arr[new_index] = arr1[arr1_index];
+                arr1_index++;
+                new_index++;
+            }
+            while (arr2_index < arr2.length && arr1_index < arr1.length && arr2[arr2_index] < arr1[arr1_index]) {
+                new_arr[new_index] = arr2[arr2_index];
+                arr2_index++;
+                new_index++;
+            }
+        }
+
+        if (arr1_index < arr1.length) {
+            for (int i = arr1_index; i < arr1.length; i++) {
+                new_arr[new_index] = arr1[i];
+                new_index++;
+            }
+        }
+        if (arr2_index < arr2.length) {
+            for (int j = arr2_index; j < arr2.length; j++) {
+                new_arr[new_index] = arr2[j];
+                new_index++;
+            }
+        }
+
+        return new_arr;
     }
-}
+
+
+    }
+
